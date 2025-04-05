@@ -119,19 +119,26 @@ def sort_data_per_month():
     if debug == "true":
         print("Starting sorting all data")
 
-    dfphone = pd.concat(map(pd.read_csv, glob.glob('data/rawdata/gesprekken*.csv')))
-    dfphone['date_converted'] = pd.to_datetime(dfphone['date'], format='%d-%m-%Y')
-    dfphone['day_of_week'] = dfphone['date_converted'].dt.day_name() # Create a new column with the day of the week
-    dfphone.drop(columns=['date_converted'], inplace=True) # Drop the intermediate datetime conversion column because it is not needed
-    dfphone.to_csv('data/phone-out.csv', index=False)
-    print (dfphone)
+    def merge_all_phone_data():
+        dfphone = pd.concat(map(pd.read_csv, glob.glob('data/rawdata/gesprekken*.csv')))
+        dfphone['date_converted'] = pd.to_datetime(dfphone['date'], format='%d-%m-%Y')
+        dfphone['day_of_week'] = dfphone['date_converted'].dt.day_name() # Create a new column with the day of the week
+        dfphone.drop(columns=['date_converted'], inplace=True) # Drop the intermediate datetime conversion column because it is not needed
+        dfphone.to_csv('data/phone-out.csv', index=False)
+        if debug == "true":
+            print (dfphone)
 
-    dfmbs = pd.concat(map(pd.read_csv, glob.glob('data/rawdata/mbs*.csv')))
-    dfmbs['date_converted'] = pd.to_datetime(dfmbs['date'], format='%d-%m-%Y')
-    dfmbs['day_of_week'] = dfmbs['date_converted'].dt.day_name() # Create a new column with the day of the week
-    dfmbs.drop(columns=['date_converted'], inplace=True) # Drop the intermediate datetime conversion column because it is not needed
-    print(dfmbs)
-    dfmbs.to_csv('data/mbs-out.csv', index=False)
+    def merge_all_mbs_data():
+        dfmbs = pd.concat(map(pd.read_csv, glob.glob('data/rawdata/mbs*.csv')))
+        dfmbs['date_converted'] = pd.to_datetime(dfmbs['date'], format='%d-%m-%Y')
+        dfmbs['day_of_week'] = dfmbs['date_converted'].dt.day_name() # Create a new column with the day of the week
+        dfmbs.drop(columns=['date_converted'], inplace=True) # Drop the intermediate datetime conversion column because it is not needed
+        dfmbs.to_csv('data/mbs-out.csv', index=False)
+        if debug == "true":
+            print(dfmbs)
+
+    merge_all_phone_data()
+    merge_all_mbs_data()
     generate_graphs()
 
 def extract_text_from_all_pages(pdf_path):
