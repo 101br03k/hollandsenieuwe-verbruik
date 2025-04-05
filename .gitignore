@@ -1,5 +1,6 @@
 source_files/*.pdf
-rawdata/
+data/
+output/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
