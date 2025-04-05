@@ -4,6 +4,15 @@ import re
 
 debug = "true"
 
+def generate_graphs():
+    if debug == "true":
+        print("Starting Generating Graphs")
+
+def sort_data_per_month():
+    if debug == "true":
+        print("Starting sorting data per month")
+    generate_graphs()
+
 def extract_text_from_all_pages(pdf_path):
     """
     Extract text from all pages in a PDF document.
@@ -52,7 +61,7 @@ def extract_text_from_pdfs_in_folder(folder_path):
                 print("rawdatafilename:",rawdatafilename)    
             
             
-            gesprekkenfilename = "rawdata/"+filename+"-gesprekken.txt"
+            gesprekkenfilename = "rawdata/"+filename+"-gesprekken.csv"
             if debug == "true":
                 print("gesprekkenfilename:",gesprekkenfilename)
 
@@ -60,7 +69,7 @@ def extract_text_from_pdfs_in_folder(folder_path):
 
             rawdata = open(rawdatafilename,'r')
             for line in rawdata.readlines():
-                x = re.findall("^[0-9]{11}", line)
+                x = re.findall("(^[0-9*]{11}[\s]{1})", line)
             
                 if x:
                 
@@ -75,7 +84,17 @@ def extract_text_from_pdfs_in_folder(folder_path):
                 
             gesprekken.close()
 
-            mbsfilename = "rawdata/"+filename+"-mbs.txt"
+            # maakt er maar gelijk een csv van voor table?
+            with open(gesprekkenfilename, 'r') as gesprekkenfile:
+                gesprekkeninhoud = gesprekkenfile.read()
+                gesprekkeninhoud = gesprekkeninhoud.replace(" ",",")
+
+            with open(gesprekkenfilename, 'w') as gesprekkenfile:
+                # write csv collums
+                gesprekkenfile.write("number,date,time,lenght,bundel\n")
+                gesprekkenfile.write(gesprekkeninhoud)
+
+            mbsfilename = "rawdata/"+filename+"-mbs.csv"
             if debug == "true":
                 print("mbsfilename:",mbsfilename)
 
@@ -98,10 +117,24 @@ def extract_text_from_pdfs_in_folder(folder_path):
                 
             mbs.close()
 
+                        # maakt er maar gelijk een csv van voor table?
+            with open(mbsfilename, 'r') as mbsfile:
+                mbsinhoud = mbsfile.read()
+                mbsinhoud = mbsinhoud.replace(",",".")
+                mbsinhoud = mbsinhoud.replace(" ",",")
+                mbsinhoud = mbsinhoud.replace(",MB"," MB")
+
+            with open(mbsfilename, 'w') as mbsfile:
+                # write csv collums
+                mbsfile.write("date,time,amount,bundel\n")
+                mbsfile.write(mbsinhoud)
+
             ##regex for date ([0-9]{2}[-]{1}[0-9]{2}[-]{1}[0-9]{4})
             ##regex to get call time ([0-9]{2}[:]{1}[0-9]{2}[:]{1}[0-9]{2}[ ]{1}[c]{1})
             ##regex to get mb's used ([,]{1}[0-9]{2})
 
+            sort_data_per_month()
+            
 if __name__ == "__main__":
     folder_path = "source_files"
     
