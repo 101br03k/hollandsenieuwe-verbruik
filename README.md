@@ -10,10 +10,7 @@ The file does not need to follow the whole format. As long as it ends with the y
 
 ## Example of output:
 
-![dayoftheweek_mbs](https://github.com/101br03k/hollandsenieuwe-verbruik/blob/main/images/dayoftheweek_mbs.png)  
-![dayoftheweek_phone](https://github.com/101br03k/hollandsenieuwe-verbruik/blob/main/images/dayoftheweek_phone.png)  
-![month_mbs](https://github.com/101br03k/hollandsenieuwe-verbruik/blob/main/images/month_mbs.png)  
-![month_phone](https://github.com/101br03k/hollandsenieuwe-verbruik/blob/main/images/month_phone.png)
+![example images](https://github.com/101br03k/hollandsenieuwe-verbruik/blob/main/images/example_image.png)
 
 ## To Do:
 
