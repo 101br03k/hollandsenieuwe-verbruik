@@ -27,16 +27,8 @@ def generate_graphs():
         grouped = grouped.reindex(days_order)
 
         # Plot the data using matplotlib
-        plt.figure(figsize=(10, 6))
-        grouped.plot(kind='bar', color=['#003f5c','#374c80',"#7a5195","#bc5090","#ef5675","#ff764a","#ffa600"])
-        #003f5c
-
-        plt.title('Data Usage per Day of the Week')
-        plt.xlabel('Day of the Week')
-        plt.ylabel('Amount (MB)')
-        plt.xticks(rotation=45)
-        plt.tight_layout()
-        plt.style.use('dark_background')
+        grouped.plot(kind='bar', color=['#003f5c','#374c80',"#7a5195","#bc5090","#ef5675","#ff764a","#ffa600"]),plt.xticks(rotation=45),plt.tight_layout(),plt.style.use('dark_background')
+        plt.title('Data Usage per Day of the Week'),plt.xlabel('Day of the Week'),plt.ylabel('Amount (MB)')
         plt.savefig('output/dayoftheweek_mbs.png')
 
     def generate_month_mbs():
@@ -49,16 +41,8 @@ def generate_graphs():
         grouped = grouped.reindex(days_order)
 
         # Plot the data using matplotlib
-        plt.figure(figsize=(10, 6))
-        grouped.plot(kind='bar', color=['#003f5c','#374c80',"#7a5195","#bc5090","#ef5675","#ff764a","#ffa600"])
-        #003f5c
-
-        plt.title('Data Usage per Month')
-        plt.xlabel('Month')
-        plt.ylabel('Amount (MB)')
-        plt.xticks(rotation=45)
-        plt.tight_layout()
-        plt.style.use('dark_background')
+        grouped.plot(kind='bar', color=['#003f5c','#374c80',"#7a5195","#bc5090","#ef5675","#ff764a","#ffa600"]),plt.xticks(rotation=45),plt.tight_layout(),plt.style.use('dark_background')
+        plt.title('Data Usage per Month'),plt.xlabel('Month'),plt.ylabel('Amount (MB)'),
         plt.savefig('output/month_mbs.png')
 
     def generate_dayoftheweek_phone():
@@ -76,15 +60,8 @@ def generate_graphs():
 
         # Plot the data using matplotlib
         plt.figure(figsize=(10, 6))
-        grouped.plot(kind='bar', color=['#003f5c','#374c80',"#7a5195","#bc5090","#ef5675","#ff764a","#ffa600"])
-        #003f5c
-
-        plt.title('Phone Calls Minutes per Day of the Week')
-        plt.xlabel('Day of the Week')
-        plt.ylabel('Amount (Minutes)')
-        plt.xticks(rotation=45)
-        plt.tight_layout()
-        plt.style.use('dark_background')
+        grouped.plot(kind='bar', color=['#003f5c','#374c80',"#7a5195","#bc5090","#ef5675","#ff764a","#ffa600"]),plt.xticks(rotation=45),plt.tight_layout(),plt.style.use('dark_background')
+        plt.title('Phone Calls Minutes per Day of the Week'),plt.xlabel('Day of the Week'),plt.ylabel('Amount (Minutes)')
         plt.savefig('output/dayoftheweek_phone.png')
     
     def generate_month_phone():
@@ -97,22 +74,54 @@ def generate_graphs():
         grouped = grouped.reindex(days_order)
 
         # Plot the data using matplotlib
-        plt.figure(figsize=(10, 6))
-        grouped.plot(kind='bar', color=['#003f5c','#374c80',"#7a5195","#bc5090","#ef5675","#ff764a","#ffa600"])
-        #003f5c
-
-        plt.title('Data Usage per Month')
-        plt.xlabel('Month')
-        plt.ylabel('Amount (MB)')
-        plt.xticks(rotation=45)
-        plt.tight_layout()
-        plt.style.use('dark_background')
+        grouped.plot(kind='bar', color=['#003f5c','#374c80',"#7a5195","#bc5090","#ef5675","#ff764a","#ffa600"]),plt.xticks(rotation=45),plt.tight_layout(),plt.style.use('dark_background')
+        plt.title('Data Usage per Month'),plt.xlabel('Month'),plt.ylabel('Amount (MB)')
         plt.savefig('output/month_phone.png')
     
+    def generate_foreachperiod_mbs():
+        allperiodsmbs = glob.glob('data/rawdata/mbs*.csv')
+        print(allperiodsmbs)
+        for each in allperiodsmbs:
+            dfallperiodsmbs = pd.read_csv(each)
+            
+            grouped = dfallperiodsmbs.groupby('date')['amount'].sum()
+            print(dfallperiodsmbs)
+
+            # Plot the data using matplotlib
+            grouped.plot(kind='bar', color=['#003f5c','#374c80',"#7a5195","#bc5090","#ef5675","#ff764a","#ffa600"]),plt.xticks(rotation=45),plt.tight_layout(),plt.style.use('dark_background')
+            plt.title('MBs used'),plt.xlabel('Date'),plt.ylabel('Amount (MBs)')
+            outputname = each[:-4]
+            outputname = outputname[-6:]
+            plt.savefig('output/period_mbs_'+outputname+'_.png')
+    
+    def generate_foreachperiod_phone():
+        allperiodsgesprekken = glob.glob('data/rawdata/gesprekken*.csv')
+        print(allperiodsgesprekken)
+        for each in allperiodsgesprekken:
+            dfallperiodsgesprekken = pd.read_csv(each)
+            
+            def convert_to_minutes(time_str):
+                h, m, s = map(int, time_str.split(':'))
+                return h * 60 + m + s / 60
+    
+            dfallperiodsgesprekken['total_minutes'] = dfallperiodsgesprekken['lenght'].apply(convert_to_minutes)
+            grouped = dfallperiodsgesprekken.groupby('date')['total_minutes'].sum()
+            print(dfallperiodsgesprekken)
+            #grouped = grouped.reindex(days_order)
+
+            # Plot the data using matplotlib
+            grouped.plot(kind='bar', color=['#003f5c','#374c80',"#7a5195","#bc5090","#ef5675","#ff764a","#ffa600"]),plt.xticks(rotation=45),plt.tight_layout(),plt.style.use('dark_background')
+            plt.title('Minutes Called'),plt.xlabel('Date'),plt.ylabel('Amount (Minutes)')
+            outputname = each[:-4]
+            outputname = outputname[-6:]
+            plt.savefig('output/period_phone_'+outputname+'_.png')
+
     generate_dayoftheweek_mbs()
     generate_month_mbs()
     generate_dayoftheweek_phone()
     generate_month_phone()
+    generate_foreachperiod_mbs()
+    generate_foreachperiod_phone()
 
 def sort_data_per_month():
     if debug == "true":
