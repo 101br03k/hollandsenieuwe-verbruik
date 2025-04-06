@@ -4,7 +4,7 @@ Using python I created a (messy) script that based on your hollandsenieuwe recei
 
 ## How to Use:
 
-Place Hollandse Nieuwe or mayby even other receipts from providers in the source\_files folder. Hollandse Nieuwe named my files \_blob\_hollandsnieuwe-factuur-\*\*\*customernumber\*\*\*250106.pdf
+Place Hollandse Nieuwe or mayby even other receipts from providers in the source\_files folder. Hollandse Nieuwe named my files \_blob\_hollandsnieuwe-factuur-**customernumber**250106.pdf
 
 The file does not need to follow the whole format. As long as it ends with the year in 2 decimals followed by the month and date. 
 
