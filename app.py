@@ -89,9 +89,9 @@ def generate_graphs():
 
             # Plot the data using matplotlib
             grouped.plot(kind='bar', color=['#003f5c','#374c80',"#7a5195","#bc5090","#ef5675","#ff764a","#ffa600"]),plt.xticks(rotation=45),plt.tight_layout(),plt.style.use('dark_background')
-            plt.title('MBs used for Each Period'),plt.xlabel('Date'),plt.ylabel('Amount (MBs)')
             outputname = each[:-4]
             outputname = outputname[-6:]
+            plt.title('MBs used for Period '+outputname),plt.xlabel('Date'),plt.ylabel('Amount (MBs)')
             plt.savefig('output/period_mbs_'+outputname+'_.png')
     
     def generate_foreachperiod_phone():
@@ -111,9 +111,9 @@ def generate_graphs():
 
             # Plot the data using matplotlib
             grouped.plot(kind='bar', color=['#003f5c','#374c80',"#7a5195","#bc5090","#ef5675","#ff764a","#ffa600"]),plt.xticks(rotation=45),plt.tight_layout(),plt.style.use('dark_background')
-            plt.title('Minutes Called for Each Period'),plt.xlabel('Date'),plt.ylabel('Amount (Minutes)')
             outputname = each[:-4]
             outputname = outputname[-6:]
+            plt.title('Minutes Called for Each Period '+outputname),plt.xlabel('Date'),plt.ylabel('Amount (Minutes)')
             plt.savefig('output/period_phone_'+outputname+'_.png')
 
     generate_dayoftheweek_mbs()
