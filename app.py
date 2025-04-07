@@ -59,9 +59,9 @@ def generate_graphs():
         grouped = grouped.reindex(days_order)
 
         # Plot the data using matplotlib
-        plt.figure(figsize=(10, 6))
+        plt.figure(figsize=(10, 6)) # this shit is broken, if I leave it here this png has fcked dimensions, if I remove it I loose all the theme settings on all graphs...
         grouped.plot(kind='bar', color=['#003f5c','#374c80',"#7a5195","#bc5090","#ef5675","#ff764a","#ffa600"]),plt.xticks(rotation=45),plt.tight_layout(),plt.style.use('dark_background')
-        plt.title('Phone Calls Minutes per Day of the Week'),plt.xlabel('Day of the Week'),plt.ylabel('Amount (Minutes)')
+        plt.title('Called Minutes per Day of the Week'),plt.xlabel('Day of the Week'),plt.ylabel('Amount (Minutes)')
         plt.savefig('output/dayoftheweek_phone.png')
     
     def generate_month_phone():
@@ -89,7 +89,7 @@ def generate_graphs():
 
             # Plot the data using matplotlib
             grouped.plot(kind='bar', color=['#003f5c','#374c80',"#7a5195","#bc5090","#ef5675","#ff764a","#ffa600"]),plt.xticks(rotation=45),plt.tight_layout(),plt.style.use('dark_background')
-            plt.title('MBs used'),plt.xlabel('Date'),plt.ylabel('Amount (MBs)')
+            plt.title('MBs used for Each Period'),plt.xlabel('Date'),plt.ylabel('Amount (MBs)')
             outputname = each[:-4]
             outputname = outputname[-6:]
             plt.savefig('output/period_mbs_'+outputname+'_.png')
@@ -111,7 +111,7 @@ def generate_graphs():
 
             # Plot the data using matplotlib
             grouped.plot(kind='bar', color=['#003f5c','#374c80',"#7a5195","#bc5090","#ef5675","#ff764a","#ffa600"]),plt.xticks(rotation=45),plt.tight_layout(),plt.style.use('dark_background')
-            plt.title('Minutes Called'),plt.xlabel('Date'),plt.ylabel('Amount (Minutes)')
+            plt.title('Minutes Called for Each Period'),plt.xlabel('Date'),plt.ylabel('Amount (Minutes)')
             outputname = each[:-4]
             outputname = outputname[-6:]
             plt.savefig('output/period_phone_'+outputname+'_.png')
